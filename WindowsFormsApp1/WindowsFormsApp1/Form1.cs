@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
         private void OpenImageButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Image Files(*.jpg; *.jpeg; *.bmp)|*.jpg; *.jpeg; *.bmp";
+            open.Filter = "Image Files(*.jpg; *.jpeg; *.bmp; *.png)|*.jpg; *.jpeg; *.bmp; *.png";
             if (open.ShowDialog() == DialogResult.OK)
             {
                 originalImage = new Bitmap(open.FileName);
@@ -53,6 +53,7 @@ namespace WindowsFormsApp1
             treshholdUpDown.Enabled = false;
             histogramButton.Enabled = false;
             summaryButton.Enabled = false;
+            processButton.Enabled = false;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
 
             Thread thr = new Thread(() =>
@@ -77,6 +78,7 @@ namespace WindowsFormsApp1
                     treshholdUpDown.Enabled = true;
                     histogramButton.Enabled = true;
                     summaryButton.Enabled = true;
+                    processButton.Enabled = true;
                     this.FormBorderStyle = FormBorderStyle.Sizable;
                 });
             });
@@ -147,7 +149,7 @@ namespace WindowsFormsApp1
             for (int i = 0; i < histogramHeight; i++)
                 for (int j = 0; j < histogramWidth; j++)
                     primitivePercentage += histogram[i][j] * (j + 1);
-            primitivePercentage = (K - 1) / primitivePercentage * 100;
+            primitivePercentage = K / primitivePercentage * 100;
 
             this.Invoke((MethodInvoker)delegate ()
             {
